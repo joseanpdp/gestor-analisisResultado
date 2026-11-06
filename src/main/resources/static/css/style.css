@@ -1,0 +1,103 @@
+/* base.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primario: #4064b1;
+    --color-primario-hover: #33517f;
+    --color-secundario: #7893ec;
+    --color-fondo: #f8fafc;
+    --color-superficie: #ffffff;
+    --color-borde: #e2e8f0;
+    --color-texto: #1e293b;
+    --color-texto-alt: #ffffff;
+    --color-texto-suave: #64748b;
+
+    --color-exito-fondo: #d1e7dd;
+    --color-exito-texto: #0f5132;
+    --color-exito-borde: #badbcc;
+
+    --color-error-fondo: #f8d7da;
+    --color-error-texto: #842029;
+    --color-error-borde: #f5c2c7;
+
+    --color-completado: #0ccc93;
+
+    --radio-borde: 8px;
+    --sombra-tarjeta: 0 2px 8px rgba(15, 23, 42, 0.1);
+
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    /*min-height: 100vh;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h2 {
+    color: var(--color-primario);
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+a {
+    color: var(--color-primario);
+    text-decoration: none;
+}
+
+.cerrar-sesion {
+    display: flex;
+    gap: 10px;
+}
+
+.cerrar-sesion-boton {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 1000;
+    border-radius: var(--radio-borde);
+    background-color: #d9534f;
+    width: auto;
+    padding: 1%;
+    transition: background-color 0.2s ease;
+}
+
+.cerrar-sesion-boton a {
+    color: #fff !important;
+}
+
+.cerrar-sesion-boton:hover {
+    background-color: #c9302c;
+}
+
+.cancelar-boton {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1000;
+    border-radius: var(--radio-borde);
+    background-color: var(--color-primario);
+    width: auto;
+    padding: 1%;
+    transition: background-color 0.2s ease;
+}
+
+.cancelar-boton a {
+    color: #fff !important;
+}
+
+.cancelar-boton:hover {
+    background-color: var(--color-primario-hover);
+}

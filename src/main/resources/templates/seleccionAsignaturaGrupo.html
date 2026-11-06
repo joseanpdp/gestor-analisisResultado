@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Selección de asignaturas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/seleccion.css}">
+    <link rel="stylesheet" th:href="@{/css/alertas.css}">
+</head>
+<body>
+<!--<div th:if="${mensaje}"
+     id="alerta"
+     class="alert alert-success"
+     role="alert">
+    <span th:text="${mensaje}"></span>
+    <button type="button"
+            onclick="document.getElementById('alerta').style.display='none'">X</button>
+</div>-->
+
+<h2>Asignaturas</h2>
+<div th:if="${mensaje}"
+     id="alerta"
+     class="alert"
+     role="alert"
+     th:classappend="${tipo}">
+    <p th:text="${mensaje}"></p>
+    <button type="button"
+            onclick="document.getElementById('alerta').style.display='none'">X</button>
+</div>
+<div class="contenedor-selectores">
+    <div class="contenedor-enlace">
+        <div class="enlace-boton analisis">
+            <a th:href="@{/analisis}">Análisis de informes</a>
+        </div>
+    </div>
+    <ul>
+        <li th:each="grupoEntry : ${gruposMap}" th:with="asignaturaNombreNivel=${grupoEntry.key}">
+            <p th:text="${asignaturaNombreNivel}"></p>
+            <ul>
+                <li th:each="grupo, iter : ${gruposMap.get(asignaturaNombreNivel)}"
+                th:with="resultado=${resultadosMap.get(asignaturaNombreNivel).get(iter.index)}">
+                    <div th:classappend="${resultado.respuesta != null} ? 'completado'" class="indicador"></div>
+                    <a th:text="${grupo.nombre}"
+                       th:href="@{/formulario?docenteId={docenteId}&asignaturaId={asignaturaId}&grupoId={grupoId}(docenteId=${docente.docenteId}, asignaturaId=${resultado.asignatura.asignaturaId}, grupoId=${resultado.grupo.grupoId})}"></a>
+                </li>
+            </ul>
+        </li>
+        <li class="contenedor-cambiarPassword">
+            <a th:href="@{/changePassword}">Cambiar contraseña</a>
+        </li>
+    </ul>
+</div>
+<div class="cerrar-sesion-boton">
+    <a th:href="@{/logout}">Cerrar sesión</a>
+</div>
+</body>
+</html>

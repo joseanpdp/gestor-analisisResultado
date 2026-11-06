@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <title>Inicio de sesión</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/alertas.css}" />
+  </head>
+  <body>
+    <h2>Iniciar sesión</h2>
+    <div th:if="${param.try_again}"
+         class="alert error"
+         role="alert">
+      <p>Credenciales incorrectas</p>
+      <button type="button"
+              onclick="document.querySelector('.alert').style.display='none'">X</button>
+    </div>
+    <div th:if="${mensaje}"
+         id="alerta"
+         class="alert"
+         role="alert"
+         th:classappend="${tipo}">
+      <p th:text="${mensaje}"></p>
+      <button type="button"
+              onclick="document.getElementById('alerta').style.display='none'">X</button>
+    </div>
+    <div class="container">
+      <form th:action="@{/login}" method="post">
+        <label class="title"> User Name: </label>
+        <input class="text" type="text" name="username" />
+        <label class="title"> Password: </label>
+        <input class="text" type="password" name="password" />
+        <div class="button-container">
+          <input class="button" type="submit" value="Iniciar sesión" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Análisis de informes</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/analisis.css}">
+</head>
+<body>
+<h2>Análisis de informes</h2>
+<div class="nav">
+    <ul>
+        <li th:each="resultado : ${resultadosAsignatura}">
+            <a th:href='${"#" + resultado.key + "-contenedor"}' th:text="${resultado.key}"></a>
+        </li>
+        <li class="regreso">
+            <img th:src="@{/images/back.png}"/>
+            <a th:href="@{/}">Regresar</a>
+        </li>
+    </ul>
+</div>
+<div class="contenedor">
+    <div th:if="${hayRespuestas}" class="contenedor-asignatrua" th:id='${resultado.key + "-contenedor"}' th:each="resultado : ${resultadosAsignatura}" th:with="grupos=${numerosAlumnosGruposResultado[resultado.key]}, total=${totalNumerosResultado[resultado.key]}">
+        <h3 th:text="${resultado.key}"></h3>
+        <div class="contenedor-grafica" th:id="${resultado.key}">
+
+        </div>
+        <div class="contenedor-tabla">
+            <table>
+                <tr class="tabla-cabecera">
+                    <td></td>
+                    <td>Alumnos</td>
+                    <td>Aprobados</td>
+                    <td>Procentaje de aprobados</td>
+                </tr>
+                <tr th:each="grupo : ${grupos}">
+                    <td th:text="${grupo.key}"></td>
+                    <td th:text="${grupo.value[0]}"></td>
+                    <td th:text="${grupo.value[1]}"></td>
+                    <td th:text="${grupo.value[2] + '%'}"></td>
+                </tr>
+                <tr>
+                    <td>Global</td>
+                    <td th:text="${total[0]}"></td>
+                    <td th:text="${total[1]}"></td>
+                    <td th:text="${total[2] + '%'}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div th:if="${!hayRespuestas}">
+        <h3>No se puede hacer ningún análisis.</h3>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:if="${hayRespuestas}" th:inline="javascript">
+    /*<![CDATA[*/
+    let asignaturas = /*[[${asignaturas}]]*/ [];
+    let resultadosAsignatura = /*[[${resultadosAsignatura}]]*/ [];
+    let numerosAlumnosGruposResultado = /*[[${numerosAlumnosGruposResultado}]]*/ [];
+    if (!numerosAlumnosGruposResultado.length > 0) {
+        let numerosAlumnosGruposKeys = Object.keys(numerosAlumnosGruposResultado);
+        for (const numerosAlumnosGruposKey of numerosAlumnosGruposKeys) {
+            const labels = [];
+            const aprobados = [];
+            const suspensos = [];
+            let numerosAlumnosGrupo = numerosAlumnosGruposResultado[numerosAlumnosGruposKey];
+            let numerosAlumnosKeys = Object.keys(numerosAlumnosGrupo);
+            const contenedorGrafica = document.getElementById(numerosAlumnosGruposKey);
+            for (const numerosAlumnosKey of numerosAlumnosKeys) {
+                let numerosAlumnos = numerosAlumnosGrupo[numerosAlumnosKey];
+                console.log(numerosAlumnos);
+                aprobados.push(numerosAlumnos[1]);
+                suspensos.push(numerosAlumnos[0] - numerosAlumnos[1]);
+                labels.push(numerosAlumnosKey);
+            }
+            const canvas = document.createElement('canvas');
+            contenedorGrafica.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Aprobados',
+                            data: aprobados,
+                            backgroundColor: '#0098ff'
+                        },
+                        {
+                            label: 'Suspensos',
+                            data: suspensos,
+                            backgroundColor: '#ff0036'
+                        }
+                    ]
+                }
+            });
+        }
+    }
+    /*]]>*/
+</script>
+<div class="cerrar-sesion-boton">
+    <a th:href="@{/logout}">Cerrar sesión</a>
+</div>
+</body>
+</html>

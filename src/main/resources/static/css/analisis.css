@@ -1,0 +1,120 @@
+/* analisis.css */
+
+.nav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 15%;
+    height: auto;
+    z-index: 1000;
+    background-color: var(--color-primario);
+}
+
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10%;
+    position: fixed;
+    width: 15%;
+}
+
+.nav li {
+    padding: 2%;
+    transition: background-color 0.2s ease;
+}
+
+.nav a {
+    color: var(--color-superficie);
+    text-decoration: none;
+    display: block;
+    margin-left: 5%;
+}
+
+.regreso {
+    margin-top: 5%;
+    border-top: 1px solid var(--color-fondo);
+    display: flex;
+    flex-direction: row;
+}
+
+.regreso img {
+    width: 10%;
+}
+
+.nav li:hover {
+    background-color: var(--color-primario-hover);
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contenedor-asignatrua {
+    padding: 2%;
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+.contenedor-asignatrua h3 {
+    margin: 0 0 1% 0;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-primario);
+}
+
+.contenedor-grafica {
+    width: 100%;
+    min-height: 250px;
+    margin-bottom: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-grafica canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 350px;
+}
+
+.contenedor-tabla {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-borde);
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.contenedor-tabla table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.95rem;
+}
+
+.contenedor-tabla th,
+.contenedor-tabla td {
+    padding: 1% 1%;
+    border-bottom: 1px solid var(--color-borde);
+    text-align: center;
+}
+
+.contenedor-tabla tr:last-child td {
+    border-bottom: none;
+    font-weight: 600;
+    color: var(--color-primario);
+}
+
+.tabla-cabecera {
+    background-color: var(--color-borde);
+}

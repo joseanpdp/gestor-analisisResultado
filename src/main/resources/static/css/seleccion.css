@@ -1,0 +1,108 @@
+/* seleccion.css */
+
+.cerrar-sesion {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-enlace {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.enlace-boton {
+    background-color: var(--color-primario);
+    border-radius: var(--radio-borde);
+    width: auto;
+    padding: 2%;
+    transition: background-color 0.2s ease;
+}
+
+.enlace-boton:hover {
+    background-color: var(--color-primario-hover);
+}
+
+.contenedor-enlace a {
+    color: var(--color-fondo);
+}
+
+.contenedor-selectores {
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+.contenedor-selectores ul {
+    list-style: none;
+}
+
+.contenedor-selectores > ul > li {
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.contenedor-selectores > ul > li:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.contenedor-selectores > ul > li > p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primario);
+    margin-bottom: 0.75rem;
+}
+
+.contenedor-selectores li li {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.35rem;
+    border-radius: var(--radio-borde);
+    transition: background-color 0.2s ease;
+}
+
+.contenedor-selectores li li:hover, .contenedor-cambiarPassword:hover {
+    background-color: rgba(120, 147, 236, 0.15);
+}
+
+.contenedor-selectores li li a {
+    margin-left: 0.75rem;
+    color: var(--color-texto);
+    font-weight: 500;
+}
+
+.indicador {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--color-texto-suave);
+    background-color: transparent;
+}
+
+.indicador.completado {
+    border-color: var(--color-completado);
+    background-color: var(--color-completado);
+}
+
+.contenedor-cambiarPassword {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 0.75rem !important;
+    border-radius: var(--radio-borde);
+    transition: background-color 0.2s ease;
+}
