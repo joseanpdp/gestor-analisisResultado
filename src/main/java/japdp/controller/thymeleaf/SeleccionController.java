@@ -4,6 +4,7 @@ import japdp.model.*;
 import japdp.model.dto.request.PasswordDTO;
 import japdp.service.DocenteService;
 import japdp.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +38,12 @@ public class SeleccionController {
      * Codificador utilizado para cifrar y comprobar contraseñas.
      */
     private final PasswordEncoder passwordEncoder;
+
+    /**
+     * Indica si la aplicación se ejecuta como demostración.
+     */
+    @Value("${app.isDemo}")
+    private boolean isDemo;
 
     /**
      * Constructor del controlador.
@@ -117,6 +124,7 @@ public class SeleccionController {
         PasswordDTO usuarioDTO = new PasswordDTO();
         usuarioDTO.setUsername(username);
         model.addAttribute("usuario", usuarioDTO);
+        model.addAttribute("isDemo", isDemo);
         //model.addAttribute("docenteLoggeado", docente);
         return "cambiarPassword";
     }
