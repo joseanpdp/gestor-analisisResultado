@@ -8,9 +8,23 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de utilidades para convertir entidades del modelo
+ * en DTOs de respuesta.
+ */
 public class ParserUtils {
+
+    /**
+     * Logger utilizado para registrar información de ejecución.
+     */
     private static final Logger log = LoggerFactory.getLogger(ParserUtils.class);
 
+    /**
+     * Convierte una entidad Tema en un DTO de respuesta.
+     *
+     * @param tema Entidad Tema
+     * @return DTO de respuesta del tema
+     */
     public static TemaResponseDTO temaToResponseDto(Tema tema) {
         TemaResponseDTO unidadDto = new TemaResponseDTO();
         unidadDto.setTemaId(tema.getTemaId());
@@ -20,6 +34,12 @@ public class ParserUtils {
         return unidadDto;
     }
 
+    /**
+     * Convierte una entidad Tema en un DTO de respuesta resumido.
+     *
+     * @param tema Entidad Tema
+     * @return DTO de respuesta resumido del tema
+     */
     public static TemaResumenResponseDTO temaToResumenResponseDto(Tema tema) {
         TemaResumenResponseDTO unidadDto = new TemaResumenResponseDTO();
         unidadDto.setTemaId(tema.getTemaId());
@@ -27,6 +47,12 @@ public class ParserUtils {
         return unidadDto;
     }
 
+    /**
+     * Convierte una entidad Grupo en un DTO de respuesta.
+     *
+     * @param grupo Entidad Grupo
+     * @return DTO de respuesta del grupo
+     */
     public static GrupoResponseDTO grupoToResponseDto(Grupo grupo) {
         GrupoResponseDTO grupoDto = new GrupoResponseDTO();
         grupoDto.setGrupoId(grupo.getGrupoId());
@@ -41,6 +67,12 @@ public class ParserUtils {
         return grupoDto;
     }
 
+    /**
+     * Convierte una entidad Grupo en un DTO de respuesta resumido.
+     *
+     * @param grupo Entidad Grupo
+     * @return DTO de respuesta resumido del grupo
+     */
     public static GrupoResumenResponseDTO grupoToResumenResponseDto(Grupo grupo) {
         GrupoResumenResponseDTO grupoDto = new GrupoResumenResponseDTO();
         grupoDto.setGrupoId(grupo.getGrupoId());
@@ -48,6 +80,12 @@ public class ParserUtils {
         return grupoDto;
     }
 
+    /**
+     * Convierte una entidad Docente en un DTO de respuesta.
+     *
+     * @param docente Entidad Docente
+     * @return DTO de respuesta del docente
+     */
     public static DocenteResponseDTO docenteToResponseDto(Docente docente) {
         DocenteResponseDTO docenteDto = new DocenteResponseDTO();
         docenteDto.setDocenteId(docente.getDocenteId());
@@ -62,6 +100,12 @@ public class ParserUtils {
         return docenteDto;
     }
 
+    /**
+     * Convierte una entidad Docente en un DTO de respuesta resumido.
+     *
+     * @param docente Entidad Docente
+     * @return DTO de respuesta resumido del docente
+     */
     public static DocenteResumenResponseDTO docenteToResumenResponseDto(Docente docente) {
         DocenteResumenResponseDTO docenteDto = new DocenteResumenResponseDTO();
         docenteDto.setDocenteId(docente.getDocenteId());
@@ -69,6 +113,12 @@ public class ParserUtils {
         return docenteDto;
     }
 
+    /**
+     * Convierte una entidad Asignatura en un DTO de respuesta resumido.
+     *
+     * @param asignatura Entidad Asignatura
+     * @return DTO de respuesta resumido de la asignatura
+     */
     public static AsignaturaResumenResponseDTO asignaturaToResumenResponseDto(Asignatura asignatura) {
         AsignaturaResumenResponseDTO asignaturaDto = new AsignaturaResumenResponseDTO();
         asignaturaDto.setAsignaturaId(asignatura.getAsignaturaId());
@@ -78,6 +128,12 @@ public class ParserUtils {
         return asignaturaDto;
     }
 
+    /**
+     * Convierte una entidad Asignatura en un DTO de respuesta.
+     *
+     * @param asignatura Entidad Asignatura
+     * @return DTO de respuesta de la asignatura
+     */
     public static AsignaturaResponseDTO asignaturaToResponseDto(Asignatura asignatura) {
         AsignaturaResponseDTO asignaturaDto = new AsignaturaResponseDTO();
         asignaturaDto.setAsignaturaId(asignatura.getAsignaturaId());
@@ -101,6 +157,12 @@ public class ParserUtils {
         return asignaturaDto;
     }
 
+    /**
+     * Convierte una entidad Resultado en un DTO de respuesta.
+     *
+     * @param resultado Entidad Resultado
+     * @return DTO de respuesta del resultado
+     */
     public static ResultadoResponseDTO resultadoToResponseDto(Resultado resultado) {
         ResultadoResponseDTO resultadoDto = new ResultadoResponseDTO();
         ResultadoId resultadoId = resultado.getResultadoId();
@@ -125,6 +187,12 @@ public class ParserUtils {
         return resultadoDto;
     }
 
+    /**
+     * Convierte una entidad Resultado en un DTO de respuesta resumido.
+     *
+     * @param resultado Entidad Resultado
+     * @return DTO de respuesta resumido del resultado
+     */
     public static ResultadoResumenResponseDTO resultadoToResumenResponseDto(Resultado resultado) {
         ResultadoResumenResponseDTO resultadoDto = new ResultadoResumenResponseDTO();
         ResultadoId resultadoId = resultado.getResultadoId();
@@ -136,6 +204,12 @@ public class ParserUtils {
         return resultadoDto;
     }
 
+    /**
+     * Convierte una entidad TemaResultado en un DTO de respuesta.
+     *
+     * @param temaResultado Entidad TemaResultado
+     * @return DTO de respuesta de la relación tema-resultado
+     */
     public static TemaResultadoResponseDTO temaResultadoToResponseDto(TemaResultado temaResultado) {
         TemaResultadoResponseDTO temaResultadoDto = new TemaResultadoResponseDTO();
         TemaResultadoIdResponseDTO temaResultadoIdDto = new TemaResultadoIdResponseDTO();
@@ -153,6 +227,12 @@ public class ParserUtils {
         return temaResultadoDto;
     }
 
+    /**
+     * Convierte una entidad Respuesta en un DTO de respuesta.
+     *
+     * @param respuesta Entidad Respuesta
+     * @return DTO de respuesta de la respuesta
+     */
     public static RespuestaResponseDTO respuestaToResponseDto(Respuesta respuesta) {
         RespuestaResponseDTO respuestaDto = new RespuestaResponseDTO();
         respuestaDto.setRespuestaId(respuesta.getRespuestaId());

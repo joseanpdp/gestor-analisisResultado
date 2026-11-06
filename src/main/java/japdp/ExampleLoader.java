@@ -13,20 +13,76 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Componente que se ejecuta al iniciar la aplicación.
+ * Permite cargar datos de ejemplo en la base de datos.
+ */
 @Component
 public class ExampleLoader implements CommandLineRunner {
 
+    /**
+     * Logger utilizado para registrar información de ejecución.
+     */
     private static final Logger log = LoggerFactory.getLogger(ExampleLoader.class);
+
+    /**
+     * Repositorio encargado del acceso a los datos de las asignaturas.
+     */
     private final AsignaturaRepository asignaturaRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de los docentes.
+     */
     private final DocenteRepository docenteRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de los grupos.
+     */
     private final GrupoRepository grupoRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de los temas.
+     */
     private final TemaRepository temaRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de los resultados.
+     */
     private final ResultadoRepository resultadoRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de las respuestas.
+     */
     private final RespuestaRepository respuestaRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de las relaciones tema-resultado.
+     */
     private final TemaResultadoRepository temaResultadoRepository;
+
+    /**
+     * Repositorio encargado del acceso a los datos de los usuarios.
+     */
     private final UsuarioRepository usuarioRepository;
+
+    /**
+     * Codificador utilizado para cifrar contraseñas.
+     */
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor del componente.
+     *
+     * @param asignaturaRepository Repositorio de asignaturas
+     * @param docenteRepository Repositorio de docentes
+     * @param grupoRepository Repositorio de grupos
+     * @param temaRepository Repositorio de temas
+     * @param resultadoRepository Repositorio de resultados
+     * @param respuestaRepository Repositorio de respuestas
+     * @param temaResultadoRepository Repositorio de relaciones tema-resultado
+     * @param usuarioRepository Repositorio de usuarios
+     * @param passwordEncoder Codificador de contraseñas
+     */
     public ExampleLoader(AsignaturaRepository asignaturaRepository, DocenteRepository docenteRepository, GrupoRepository grupoRepository, TemaRepository temaRepository, ResultadoRepository resultadoRepository, RespuestaRepository respuestaRepository, TemaResultadoRepository temaResultadoRepository, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.asignaturaRepository = asignaturaRepository;
         this.docenteRepository = docenteRepository;
@@ -39,6 +95,12 @@ public class ExampleLoader implements CommandLineRunner {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Ejecuta la carga de datos de ejemplo al iniciar la aplicación.
+     *
+     * @param args Argumentos de línea de comandos
+     * @throws Exception Si ocurre un error durante la ejecución
+     */
     @Override
     @Transactional
     public void run(String... args) throws Exception {

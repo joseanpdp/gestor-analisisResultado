@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repositorio encargado del acceso a los datos de las asignaturas.
+ * Proporciona operaciones básicas de CRUD para la entidad Asignatura.
+ */
 @Repository
 public interface AsignaturaRepository extends JpaRepository<Asignatura, Long> {
 

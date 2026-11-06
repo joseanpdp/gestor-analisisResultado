@@ -9,26 +9,20 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repositorio encargado del acceso a los datos de los resultados.
+ * Proporciona operaciones básicas de CRUD y consultas personalizadas
+ * para la entidad Resultado.
+ */
 @Repository
 public interface ResultadoRepository extends JpaRepository<Resultado, ResultadoId> {
-    /*
-    SELECT a.*
-        FROM ASIGNATURA_DOCENTE_GRUPO AS r
-        JOIN ASIGNATURA AS a
-            ON r.ASIGNATURA_ID = a.ASIGNATURA_ID;
-    SELECT d.*
-        FROM ASIGNATURA_DOCENTE_GRUPO AS r
-        JOIN DOCENTE AS d
-            ON r.DOCENTE_ID = d.DOCENTE_ID
-        WHERE r.ASIGNATURA_ID = 1;
-    SELECT g.*
-        FROM ASIGNATURA_DOCENTE_GRUPO AS r
-        JOIN GRUPO AS g
-            ON r.GRUPO_ID = g.GRUPO_ID
-        WHERE r.ASIGNATURA_ID = 1 AND
-              r.DOCENTE_ID = 1;
-    */
 
+    /**
+     * Obtiene las asignaturas asociadas a un docente.
+     *
+     * @param docenteId Identificador del docente
+     * @return Lista de asignaturas asociadas al docente
+     */
     @Query("""
         SELECT a
                 FROM Resultado r
@@ -37,6 +31,13 @@ public interface ResultadoRepository extends JpaRepository<Resultado, ResultadoI
     """)
     List<Asignatura> findAsignaturasByDocenteId(@Param("docenteId") Long docenteId);
 
+    /**
+     * Obtiene los grupos asociados a un docente y una asignatura.
+     *
+     * @param docenteId Identificador del docente
+     * @param asignaturaId Identificador de la asignatura
+     * @return Lista de grupos asociados
+     */
     @Query("""
         SELECT g
                 FROM Resultado r
@@ -46,11 +47,24 @@ public interface ResultadoRepository extends JpaRepository<Resultado, ResultadoI
     """)
     List<Grupo> findGruposByDocenteIdAndAsignaturaId(@Param("docenteId") Long docenteId, @Param("asignaturaId") Long asignaturaId);
 
+    /**
+     * Obtiene los resultados asociados a una asignatura.
+     *
+     * @param asignaturaId Identificador de la asignatura
+     * @return Lista de resultados asociados a la asignatura
+     */
     @Query("""
         SELECT r FROM Resultado r WHERE r.asignatura.asignaturaId = :asignaturaId
     """)
     List<Resultado> findByAsignaturaId(@Param("asignaturaId") Long asignaturaId);
 
+    /**
+     * Obtiene un resultado por asignatura y grupo.
+     *
+     * @param asignaturaId Identificador de la asignatura
+     * @param grupoId Identificador del grupo
+     * @return Resultado encontrado, si existe
+     */
     @Query("""
         SELECT r FROM Resultado r WHERE r.asignatura.asignaturaId = :asignaturaId AND r.grupo.grupoId = :grupoId
     """)
