@@ -19,18 +19,64 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
+/**
+ * Controlador que gestiona el formulario de análisis de resultados.
+ * Permite cargar un formulario existente y guardar los datos introducidos.
+ */
 @Controller
 public class FormularioController {
 
+    /**
+     * Logger utilizado para registrar información de ejecución.
+     */
     private static final Logger log = LoggerFactory.getLogger(FormularioController.class);
+
+    /**
+     * Servicio encargado de la lógica de negocio de los docentes.
+     */
     private final DocenteService docenteService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las asignaturas.
+     */
     private final AsignaturaService asignaturaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los grupos.
+     */
     private final GrupoService grupoService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los temas.
+     */
     private final TemaService temaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los resultados.
+     */
     private final ResultadoService resultadoService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las respuestas.
+     */
     private final RespuestaService respuestaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las relaciones tema-resultado.
+     */
     private final TemaResultadoService temaResultadoService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param docenteService Servicio de docentes
+     * @param asignaturaService Servicio de asignaturas
+     * @param grupoService Servicio de grupos
+     * @param temaService Servicio de temas
+     * @param resultadoService Servicio de resultados
+     * @param respuestaService Servicio de respuestas
+     * @param temaResultadoService Servicio de relaciones tema-resultado
+     */
     public FormularioController(DocenteService docenteService, AsignaturaService asignaturaService, GrupoService grupoService, TemaService temaService, ResultadoService resultadoService, RespuestaService respuestaService, TemaResultadoService temaResultadoService) {
         this.docenteService = docenteService;
         this.asignaturaService = asignaturaService;
@@ -41,6 +87,17 @@ public class FormularioController {
         this.temaResultadoService = temaResultadoService;
     }
 
+    /**
+     * Muestra el formulario de análisis para un docente, asignatura y grupo.
+     *
+     * Carga los datos existentes del resultado, la respuesta y los temas evaluados.
+     *
+     * @param docenteId Identificador del docente
+     * @param asignaturaId Identificador de la asignatura
+     * @param grupoId Identificador del grupo
+     * @param model Modelo para enviar datos a la vista
+     * @return Nombre de la plantilla Thymeleaf
+     */
     @GetMapping("/formulario")
     public String irFormulario(@RequestParam("docenteId") Long docenteId,
                                @RequestParam("asignaturaId") Long asignaturaId,
@@ -114,6 +171,16 @@ public class FormularioController {
         return "error";
     }
 
+    /**
+     * Guarda los datos introducidos en el formulario de análisis.
+     *
+     * Valida que el número de aprobados no sea mayor que el número
+     * de alumnos del grupo y guarda la respuesta y los temas evaluados.
+     *
+     * @param resultadoDto Datos recibidos desde el formulario
+     * @param redirectAttributes Atributos temporales para redirección
+     * @return Redirección a la vista correspondiente
+     */
     @PostMapping("/formulario/guardar")
     public String guardarFormulario(@ModelAttribute ResultadoRequestDTO resultadoDto,
                                     RedirectAttributes redirectAttributes) {

@@ -15,19 +15,51 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.swing.text.html.Option;
 import java.util.*;
 
+/**
+ * Controlador que gestiona la selección de asignaturas y grupos.
+ * También permite cambiar la contraseña del usuario autenticado.
+ */
 @Controller
 @RequestMapping("/")
 public class SeleccionController {
+
+    /**
+     * Servicio encargado de la lógica de negocio de los docentes.
+     */
     private final DocenteService docenteService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los usuarios.
+     */
     private final UsuarioService usuarioService;
+
+    /**
+     * Codificador utilizado para cifrar y comprobar contraseñas.
+     */
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param docenteService Servicio de docentes
+     * @param usuarioService Servicio de usuarios
+     * @param passwordEncoder Codificador de contraseñas
+     */
     public SeleccionController(DocenteService docenteService, UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
         this.docenteService = docenteService;
         this.usuarioService = usuarioService;
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Muestra la vista de selección de asignatura y grupo.
+     *
+     * Obtiene el usuario autenticado, comprueba que tenga un docente asociado
+     * y organiza los resultados por asignatura y grupo.
+     *
+     * @param model Modelo para enviar datos a la vista
+     * @return Nombre de la plantilla Thymeleaf
+     */
     @GetMapping
     public String irSeleccionUnidad(/*@RequestParam("docenteId") Long docenteId, */Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -100,7 +132,6 @@ public class SeleccionController {
      * @param redirectAttributes Atributos temporales para redirección
      * @return Redirección a la vista correspondiente
      */
-
     @PostMapping("/changePassword")
     public String cahngePassword(@ModelAttribute("docente") PasswordDTO chanPassDocenteDTO,
                                  RedirectAttributes redirectAttributes) {

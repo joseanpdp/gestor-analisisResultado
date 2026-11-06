@@ -19,15 +19,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 
+/**
+ * Controlador que gestiona la vista de análisis de resultados.
+ * Muestra estadísticas de alumnos, aprobados y porcentajes por asignatura y grupo.
+ */
 @Controller
 @RequestMapping("/analisis")
 public class AnalisisController {
+
+    /**
+     * Logger utilizado para registrar información de ejecución.
+     */
     private static final Logger log = LoggerFactory.getLogger(AnalisisController.class);
+
+    /**
+     * Servicio encargado de la lógica de negocio de los docentes.
+     */
     private final DocenteService docenteService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los usuarios.
+     */
     private final UsuarioService usuarioService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las asignaturas.
+     */
     private final AsignaturaService asignaturaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las respuestas.
+     */
     private final RespuestaService respuestaService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param docenteService Servicio de docentes
+     * @param usuarioService Servicio de usuarios
+     * @param asignaturaService Servicio de asignaturas
+     * @param respuestaService Servicio de respuestas
+     */
     public AnalisisController(DocenteService docenteService, UsuarioService usuarioService, AsignaturaService asignaturaService, RespuestaService respuestaService) {
         this.docenteService = docenteService;
         this.usuarioService = usuarioService;
@@ -35,6 +67,15 @@ public class AnalisisController {
         this.respuestaService = respuestaService;
     }
 
+    /**
+     * Muestra la vista de análisis con los resultados disponibles.
+     *
+     * Calcula el número de alumnos, aprobados y porcentaje de aprobados
+     * por asignatura y grupo, siempre que existan respuestas registradas.
+     *
+     * @param model Modelo para enviar datos a la vista
+     * @return Nombre de la plantilla Thymeleaf
+     */
     @GetMapping
     public String irAnalisis(Model model) {
         List<Respuesta> respuestas = respuestaService.findAll();
