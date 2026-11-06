@@ -30,20 +30,66 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST que gestiona las operaciones relacionadas con los resultados.
+ * Expone endpoints para consultar, crear y generar estadísticas de resultados.
+ */
 @RestController
 @RequestMapping("/api/resultados")
 @CrossOrigin(origins = "http://localhost:5500")
 public class ResultadoController {
 
+    /**
+     * Logger utilizado para registrar información de ejecución.
+     */
     private static final Logger log = LoggerFactory.getLogger(ResultadoController.class);
+
+    /**
+     * Servicio encargado de la lógica de negocio de los resultados.
+     */
     private final ResultadoService resultadoService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las asignaturas.
+     */
     private final AsignaturaService asignaturaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los grupos.
+     */
     private final GrupoService grupoService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los docentes.
+     */
     private final DocenteService docenteService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las respuestas.
+     */
     private final RespuestaService respuestaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los temas.
+     */
     private final TemaService temaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las relaciones tema-resultado.
+     */
     private final TemaResultadoService temaResultadoService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param resultadoService Servicio de resultados
+     * @param asignaturaService Servicio de asignaturas
+     * @param grupoService Servicio de grupos
+     * @param docenteService Servicio de docentes
+     * @param respuestaService Servicio de respuestas
+     * @param temaService Servicio de temas
+     * @param temaResultadoService Servicio de relaciones tema-resultado
+     */
     public ResultadoController(ResultadoService resultadoService, AsignaturaService asignaturaService, GrupoService grupoService, DocenteService docenteService, RespuestaService respuestaService, TemaService temaService, TemaResultadoService temaResultadoService) {
         this.resultadoService = resultadoService;
         this.asignaturaService = asignaturaService;
@@ -54,6 +100,11 @@ public class ResultadoController {
         this.temaResultadoService = temaResultadoService;
     }
 
+    /**
+     * Obtiene todos los resultados disponibles.
+     *
+     * @return Lista de resultados en formato DTO
+     */
     @GetMapping
     public ResponseEntity<List<ResultadoResponseDTO>> findAll() {
         List<Resultado> resultados = resultadoService.findAll();
@@ -65,6 +116,14 @@ public class ResultadoController {
         return ResponseEntity.ok(asignaturaDocenteGrupoDtos);
     }
 
+    /**
+     * Obtiene un resultado por los identificadores de docente, asignatura y grupo.
+     *
+     * @param docenteId Identificador del docente
+     * @param asignaturaId Identificador de la asignatura
+     * @param grupoId Identificador del grupo
+     * @return Resultado encontrado o respuesta 404
+     */
     @GetMapping("/docente/{docenteId}/asignatura/{asignaturaId}/grupo/{grupoId}")
     public ResponseEntity<ResultadoResponseDTO> findById(@PathVariable Long docenteId, @PathVariable Long asignaturaId, @PathVariable Long grupoId) {
         ResultadoId resultadoId = new ResultadoId(asignaturaId, docenteId, grupoId);
@@ -77,6 +136,12 @@ public class ResultadoController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Obtiene las asignaturas asociadas a un docente.
+     *
+     * @param docenteId Identificador del docente
+     * @return Lista de asignaturas en formato DTO resumido
+     */
     @GetMapping("/docente/{docenteId}")
     public ResponseEntity<List<AsignaturaResumenResponseDTO>> findAsignaturaByDocenteId(@PathVariable Long docenteId) {
         List<Asignatura> asignaturas = resultadoService.findAsignaturasByDocenteId(docenteId);
@@ -88,6 +153,13 @@ public class ResultadoController {
         return ResponseEntity.ok(docenteDtos);
     }
 
+    /**
+     * Obtiene los grupos asociados a un docente y una asignatura.
+     *
+     * @param docenteId Identificador del docente
+     * @param asignaturaId Identificador de la asignatura
+     * @return Lista de grupos en formato DTO resumido
+     */
     @GetMapping("/docente/{docenteId}/asignatura/{asignaturaId}")
     public ResponseEntity<List<GrupoResumenResponseDTO>> findGruposByDocenteIdAndAsignaturaId(@PathVariable Long docenteId, @PathVariable Long asignaturaId) {
         List<Grupo> grupos = resultadoService.findGruposByDocenteIdAndAsignaturaId(docenteId, asignaturaId);
@@ -99,6 +171,12 @@ public class ResultadoController {
         return ResponseEntity.ok(grupoDtos);
     }
 
+    /**
+     * Obtiene los resultados asociados a una asignatura.
+     *
+     * @param asignaturaId Identificador de la asignatura
+     * @return Lista de resultados en formato DTO
+     */
     @GetMapping("/asignatura/{asignaturaId}")
     public ResponseEntity<List<ResultadoResponseDTO>> findResultadosByAsignaturaId(@PathVariable Long asignaturaId) {
         List<Resultado> resultados = resultadoService.findResultadosByAsignaturaId(asignaturaId);
@@ -110,6 +188,12 @@ public class ResultadoController {
         return ResponseEntity.ok(resultadoDtos);
     }
 
+    /**
+     * Guarda o actualiza un resultado con su respuesta y temas evaluados.
+     *
+     * @param resultadoRequest Datos del resultado a guardar
+     * @return Resultado guardado o respuesta 404
+     */
     @PostMapping
     public ResponseEntity<ResultadoResponseDTO> saveResultado(@RequestBody ResultadoRequestDTO resultadoRequest) {
         log.info("El método se inicia");
@@ -170,6 +254,15 @@ public class ResultadoController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Genera una gráfica de tarta con los alumnos aprobados y suspensos
+     * de una asignatura y grupo concretos.
+     *
+     * @param asignaturaId Identificador de la asignatura
+     * @param grupoId Identificador del grupo
+     * @return Imagen de la gráfica en formato Base64 o respuesta 404
+     * @throws IOException Si ocurre un error al generar la imagen
+     */
     @GetMapping("/estadistica/aprobados/asignatura/{asignaturaId}/grupo/{grupoId}")
     public ResponseEntity<String> loadGraficaTartaAprobadosByAsignaturaIdAndGrupoId(@PathVariable Long asignaturaId, @PathVariable Long grupoId) throws IOException {
         Optional<Resultado> optional = resultadoService.findResultadoByAsignaturaIdAndGrupoId(asignaturaId, grupoId);
@@ -200,6 +293,14 @@ public class ResultadoController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Genera una gráfica de barras con los alumnos aprobados y suspensos
+     * de todos los grupos de una asignatura.
+     *
+     * @param asignaturaId Identificador de la asignatura
+     * @return Imagen de la gráfica en formato Base64 o respuesta 404
+     * @throws IOException Si ocurre un error al generar la imagen
+     */
     @GetMapping("/estadistica/aprobados/asignatura/{asignaturaId}")
     public ResponseEntity<String> loadGraficaBarrasByAsignaturaId(@PathVariable Long asignaturaId) throws IOException {
         List<Resultado> resultados = resultadoService.findResultadosByAsignaturaId(asignaturaId);

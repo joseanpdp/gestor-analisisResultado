@@ -12,19 +12,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST que gestiona las operaciones relacionadas con los temas.
+ * Expone endpoints para consultar los temas disponibles.
+ */
 @RestController
 @RequestMapping("/api/temas")
 @CrossOrigin(origins = "http://localhost:5500")
 public class TemaController {
 
+    /**
+     * Servicio encargado de la lógica de negocio de los temas.
+     */
     private final TemaService temaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las asignaturas.
+     */
     private final AsignaturaService asignaturaService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param temaService Servicio de temas
+     * @param asignaturaService Servicio de asignaturas
+     */
     public TemaController(TemaService temaService, AsignaturaService asignaturaService) {
         this.temaService = temaService;
         this.asignaturaService = asignaturaService;
     }
 
+    /**
+     * Obtiene todos los temas disponibles.
+     *
+     * @return Lista de temas en formato DTO
+     */
     @GetMapping
     public ResponseEntity<List<TemaResponseDTO>> findAll() {
         List<Tema> temas = temaService.findAll();
@@ -38,6 +60,12 @@ public class TemaController {
         return ResponseEntity.ok(unidadDtos);
     }
 
+    /**
+     * Obtiene un tema por su identificador.
+     *
+     * @param id Identificador del tema
+     * @return Tema encontrado o respuesta 404
+     */
     @GetMapping("/{id}")
     public ResponseEntity<TemaResponseDTO> findById(@PathVariable Long id) {
         Optional<Tema> optional = temaService.findById(id);
@@ -52,6 +80,12 @@ public class TemaController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Obtiene los temas asociados a una asignatura.
+     *
+     * @param asignaturaId Identificador de la asignatura
+     * @return Lista de temas en formato DTO resumido o respuesta 404
+     */
     @GetMapping("/asignatura/{asignaturaId}")
     public ResponseEntity<List<TemaResumenResponseDTO>> findTemasByAsignaturaId(@PathVariable Long asignaturaId) {
         List<Tema> temas = temaService.findTemasByAsignaturaId(asignaturaId);
@@ -65,44 +99,4 @@ public class TemaController {
         }
         return ResponseEntity.notFound().build();
     }
-
-    /*@PostMapping
-    public ResponseEntity<UnidadSimpleResponseDTO> save(@RequestBody UnidadRequestDTO unidadDto) {
-        Optional<Asignatura> optional = asignaturaService.findById(unidadDto.getAsignaturaId());
-        if (!optional.isEmpty()) {
-            Unidad unidad = new Unidad();
-            unidad.setNombre(unidadDto.getNombre());
-            unidad.setAsignatura(optional.get());
-            Unidad unidadGuardada = unidadService.save(unidad);
-            return ResponseEntity
-                    .created(URI.create("/api/unidades/" + unidadGuardada.getId()))
-                    .body(ParserUtils.unidadToSimpleResponseDto(unidadGuardada));
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Unidad> update(
-            @PathVariable Long id,
-            @RequestBody Unidad unidad
-    ) {
-        if (unidadService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        unidad.setId(id);
-
-        return ResponseEntity.ok(unidadService.save(unidad));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (unidadService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        unidadService.deleteById(id);
-
-        return ResponseEntity.noContent().build();
-    }*/
 }

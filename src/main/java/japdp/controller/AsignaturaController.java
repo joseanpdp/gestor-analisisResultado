@@ -14,20 +14,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST que gestiona las operaciones relacionadas con las asignaturas.
+ * Expone endpoints para consultar las asignaturas disponibles.
+ */
 @RestController
 @RequestMapping("/api/asignaturas")
 @CrossOrigin(origins = "http://localhost:5500")
 public class AsignaturaController {
 
+    /**
+     * Logger utilizado para registrar información de ejecución.
+     */
     private static final Logger log = LoggerFactory.getLogger(AsignaturaController.class);
+
+    /**
+     * Servicio encargado de la lógica de negocio de las asignaturas.
+     */
     private final AsignaturaService asignaturaService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de los grupos.
+     */
     private final GrupoService grupoService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param asignaturaService Servicio de asignaturas
+     * @param grupoService Servicio de grupos
+     */
     public AsignaturaController(AsignaturaService asignaturaService, GrupoService grupoService) {
         this.asignaturaService = asignaturaService;
         this.grupoService = grupoService;
     }
 
+    /**
+     * Obtiene todas las asignaturas disponibles.
+     *
+     * @return Lista de asignaturas en formato DTO
+     */
     @GetMapping
     public ResponseEntity<List<AsignaturaResponseDTO>> findAll() {
         List<Asignatura> asignaturas = asignaturaService.findAll();
@@ -39,6 +65,12 @@ public class AsignaturaController {
         return ResponseEntity.ok(asignaturaDtos);
     }
 
+    /**
+     * Obtiene una asignatura por su identificador.
+     *
+     * @param id Identificador de la asignatura
+     * @return Asignatura encontrada o respuesta 404
+     */
     @GetMapping("/{id}")
     public ResponseEntity<AsignaturaResponseDTO> findById(@PathVariable Long id) {
         Optional<Asignatura> optional = asignaturaService.findById(id);
@@ -49,40 +81,4 @@ public class AsignaturaController {
         }
         return ResponseEntity.notFound().build();
     }
-
-    /*@PostMapping
-    public ResponseEntity<AsignaturaSimpleResponseDTO> save(@RequestBody AsignaturaRequestDTO asignaturaDto) {
-        Optional<Grupo> optional = grupoService.findById(asignaturaDto.getGrupoId());
-        if (!optional.isEmpty()) {
-            Asignatura asignatura = new Asignatura();
-            asignatura.setNombre(asignaturaDto.getNombre());
-            asignatura.setAbreviatura(asignaturaDto.getAbreviatura());
-            asignatura.setNivel(asignaturaDto.getNivel());
-            asignatura.setGrupo(optional.get());
-            Asignatura asignaturaGuardada = asignaturaService.save(asignatura);
-            return ResponseEntity.created(URI.create("/api/asignaturas/" + asignaturaGuardada.getId()))
-                    .body(ParserUtils.asignaturaToSimpleResponseDto(asignaturaGuardada));
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Asignatura> update(@PathVariable Long id, @RequestBody Asignatura asignatura) {
-        if (asignaturaService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        asignatura.setId(id);
-        return ResponseEntity.ok(asignaturaService.save(asignatura));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (asignaturaService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        asignaturaService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }*/
-
-
 }

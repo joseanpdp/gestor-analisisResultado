@@ -13,19 +13,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST que gestiona las operaciones relacionadas con los docentes.
+ * Expone endpoints para consultar los docentes disponibles.
+ */
 @RestController
 @RequestMapping("/api/docentes")
 @CrossOrigin(origins = "http://localhost:5500")
 public class DocenteController {
 
+    /**
+     * Servicio encargado de la lógica de negocio de los docentes.
+     */
     private final DocenteService docenteService;
+
+    /**
+     * Servicio encargado de la lógica de negocio de las asignaturas.
+     */
     private final AsignaturaService asignaturaService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param docenteService Servicio de docentes
+     * @param asignaturaService Servicio de asignaturas
+     */
     public DocenteController(DocenteService docenteService, AsignaturaService asignaturaService) {
         this.docenteService = docenteService;
         this.asignaturaService = asignaturaService;
     }
 
+    /**
+     * Obtiene todos los docentes disponibles.
+     *
+     * @return Lista de docentes en formato DTO resumido
+     */
     @GetMapping
     public ResponseEntity<List<DocenteResumenResponseDTO>> findAll() {
         List<Docente> docentes = docenteService.findAll();
@@ -39,6 +61,12 @@ public class DocenteController {
         return ResponseEntity.ok(docenteDtos);
     }
 
+    /**
+     * Obtiene un docente por su identificador.
+     *
+     * @param id Identificador del docente
+     * @return Docente encontrado o respuesta 404
+     */
     @GetMapping("/{id}")
     public ResponseEntity<DocenteResponseDTO> findById(@PathVariable Long id) {
         Optional<Docente> optional = docenteService.findById(id);
@@ -52,39 +80,4 @@ public class DocenteController {
 
         return ResponseEntity.notFound().build();
     }
-
-    /*@PostMapping
-    public ResponseEntity<DocenteSimpleResponseDTO> save(@RequestBody DocenteRequestDTO docenteDto) {
-        Docente docente = new Docente();
-        docente.setNombre(docenteDto.getNombre());
-        Docente docenteGuardado = docenteService.save(docente);
-        return ResponseEntity
-                .created(URI.create("/api/docentes/" + docenteGuardado.getId()))
-                .body(ParserUtils.docenteToSimpleResponseDto(docenteGuardado));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Docente> update(
-            @PathVariable Long id,
-            @RequestBody Docente docente
-    ) {
-        if (docenteService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        docente.setId(id);
-
-        return ResponseEntity.ok(docenteService.save(docente));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (docenteService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        docenteService.deleteById(id);
-
-        return ResponseEntity.noContent().build();
-    }*/
 }

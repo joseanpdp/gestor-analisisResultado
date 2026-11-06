@@ -12,17 +12,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST que gestiona las operaciones relacionadas con los grupos.
+ * Expone endpoints para consultar los grupos disponibles.
+ */
 @RestController
 @RequestMapping("/api/grupos")
 @CrossOrigin(origins = "http://localhost:5500")
 public class GrupoController {
 
+    /**
+     * Servicio encargado de la lógica de negocio de los grupos.
+     */
     private final GrupoService grupoService;
 
+    /**
+     * Constructor del controlador.
+     *
+     * @param grupoService Servicio de grupos
+     */
     public GrupoController(GrupoService grupoService) {
         this.grupoService = grupoService;
     }
 
+    /**
+     * Obtiene todos los grupos disponibles.
+     *
+     * @return Lista de grupos en formato DTO resumido
+     */
     @GetMapping
     public ResponseEntity<List<GrupoResumenResponseDTO>> findAll() {
         List<Grupo> grupos = grupoService.findAll();
@@ -36,6 +53,12 @@ public class GrupoController {
         return ResponseEntity.ok(grupoDtos);
     }
 
+    /**
+     * Obtiene un grupo por su identificador.
+     *
+     * @param id Identificador del grupo
+     * @return Grupo encontrado o respuesta 404
+     */
     @GetMapping("/{id}")
     public ResponseEntity<GrupoResponseDTO> findById(@PathVariable Long id) {
         Optional<Grupo> optional = grupoService.findById(id);
@@ -49,50 +72,4 @@ public class GrupoController {
 
         return ResponseEntity.notFound().build();
     }
-
-    /*@GetMapping("/asignatura/{asignaturaId}")
-    public ResponseEntity<List<GrupoResumenResponseDTO>> findGruposByAsignaturaId(@PathVariable Long asignaturaId) {
-        List<Grupo> grupos = grupoService.findGruposByAsignaturaId(asignaturaId);
-        List<GrupoResumenResponseDTO> grupoDtos = new ArrayList<>();
-        for (Grupo grupo : grupos) {
-            GrupoResumenResponseDTO grupoDto = ParserUtils.grupoToResumenResponseDto(grupo);
-            grupoDtos.add(grupoDto);
-        }
-        return ResponseEntity.ok(grupoDtos);
-    }*/
-
-    /*@PostMapping
-    public ResponseEntity<GrupoResumenResponseDTO> save(@RequestBody GrupoRequestDTO grupoDto) {
-        Grupo grupo = new Grupo();
-        grupo.setNombre(grupoDto.getNombre());
-        Grupo grupoGuardado = grupoService.save(grupo);
-        return ResponseEntity
-                .created(URI.create("/api/grupos/" + grupoGuardado.getId()))
-                .body(ParserUtils.grupoToResumenResponseDto(grupoGuardado));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Grupo> update(
-            @PathVariable Long id,
-            @RequestBody Grupo grupo
-    ) {
-        if (grupoService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        grupo.setId(id);
-
-        return ResponseEntity.ok(grupoService.save(grupo));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (grupoService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        grupoService.deleteById(id);
-
-        return ResponseEntity.noContent().build();
-    }*/
 }
