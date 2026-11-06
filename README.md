@@ -87,6 +87,7 @@ Para poder navegar fácilmente de una asignatura a otra se puede navegar mediant
 ![Formulario para cambiar contraseña](/mediaReadme/formularioCambiarPassword.png)
 
 En esta pantalla se puede cambiar la contraseña del usuario que ha iniciado sesión.
+Esta opción no está habilitada en la demostración.
 
 ## USUARIO
 
