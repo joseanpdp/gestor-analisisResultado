@@ -8,6 +8,7 @@ Esto es un proyecto desarrollado para que los docentes puedan registrar los resu
   - [Secciones de la aplicación](#secciones-de-la-aplicación)
   - [Formulario de grupo](#formulario-de-grupo)
   - [Análisis de informe](#análisis-de-informe)
+  - [Cambio de contraseña](#cambio-de-contraseña)
 - [USUARIO](#usuario)
 
 ## ADMINISTRADOR
