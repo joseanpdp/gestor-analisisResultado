@@ -196,7 +196,6 @@ public class ResultadoController {
      */
     @PostMapping
     public ResponseEntity<ResultadoResponseDTO> saveResultado(@RequestBody ResultadoRequestDTO resultadoRequest) {
-        log.info("El método se inicia");
         ResultadoId resultadoId = new ResultadoId(
                 resultadoRequest.getAsignaturaId(),
                 resultadoRequest.getDocenteId(),
@@ -205,7 +204,6 @@ public class ResultadoController {
         Optional<Resultado> resultadoOptional = resultadoService.findById(resultadoId);
 
         if (!resultadoOptional.isEmpty()) {
-            log.info("Se encuentra un resultado");
             Resultado resultado = resultadoOptional.get();
             RespuestaRequestDTO respuestaRequest = resultadoRequest.getRespuesta();
             Respuesta respuesta = new Respuesta(
@@ -226,7 +224,6 @@ public class ResultadoController {
             for (TemaResultadoRequestDTO temaResultadoDto : temaResultadoDtos) {
                 Optional<Tema> temaOptional = temaService.findById(temaResultadoDto.getTemaId());
                 if (!temaOptional.isEmpty()) {
-                    log.info("El tema existe");
                     Tema tema = temaOptional.get();
                     TemaResultado temaResultado = new TemaResultado(
                             tema,
@@ -243,12 +240,9 @@ public class ResultadoController {
             }
             respuesta.setResultado(resultado);
             respuestaService.save(respuesta);
-            log.info("Se guarda correctamente la respuesta");
             resultado.setRespuesta(respuesta);
             resultadoService.save(resultado);
-            log.info("Se guarda correctamente el resultado");
             temaResultadoService.saveAll(temasResultados);
-            log.info("Se guardan correctamente los temas");
             return ResponseEntity.ok(ParserUtils.resultadoToResponseDto(resultado));
         }
         return ResponseEntity.notFound().build();

@@ -137,7 +137,6 @@ public class AnalisisController {
             model.addAttribute("totalNumerosResultado", totalNumerosResultado);
         }
         else {
-            log.info("No hay respuestas");
             model.addAttribute("hayRespuestas", false);
         }
         return "analisis";

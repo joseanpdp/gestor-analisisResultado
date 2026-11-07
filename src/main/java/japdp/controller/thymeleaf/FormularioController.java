@@ -139,7 +139,6 @@ public class FormularioController {
                         respuesta.getPropuestasMejora()
                 );
                 resultadoDto.setRespuesta(respuestaDto);
-                log.info("Hay una respuesta");
             }
 
             if (resultado.getTemasResultados() != null) {
@@ -152,7 +151,6 @@ public class FormularioController {
                     temaResultadoDto.setEvaluada(temaResultado.isEvaluada());
                     temaResultadoDto.setObservaciones(temaResultado.getObservaciones());
                     temaResultadosDto.add(temaResultadoDto);
-                    log.info("Hay un tema resultado");
                 }
                 resultadoDto.setTemasResultados(temaResultadosDto);
 
@@ -189,9 +187,6 @@ public class FormularioController {
                 resultadoDto.getDocenteId(),
                 resultadoDto.getGrupoId()
         );
-        log.info("Docente id: {}", resultadoDto.getDocenteId());
-        log.info("Asignatura id: {}", resultadoDto.getAsignaturaId());
-        log.info("Grupo id: {}", resultadoDto.getGrupoId());
         Optional<Resultado> resultadoOptional = resultadoService.findById(resultadoId);
         if (!resultadoOptional.isEmpty()) {
             Resultado resultado = resultadoOptional.get();
