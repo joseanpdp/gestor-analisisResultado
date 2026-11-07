@@ -7,7 +7,7 @@ import jakarta.persistence.*;
  * Se corresponde con una tabla en la base de datos.
  */
 @Entity
-@Table(name = "respuesta")
+@Table(name = "analisis-respuesta")
 public class Respuesta {
 
     /**

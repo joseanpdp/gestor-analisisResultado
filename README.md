@@ -1,21 +1,23 @@
 # Manual de uso
 
-Esto es un proyecto desarrollado para que los docentes puedan registrar los resultados de sus alumnos y comprobar el número de aprobados que hay en cada asignatura y cada grupo.
+Esta aplicación permite a los docentes registrar los resultados académicos de sus alumnos por asignatura y grupo. A partir de los datos introducidos, se pueden consultar el número de alumnos aprobados y suspensos, así como visualizar informes gráficos de los resultados.
 
 ## Índice
 
 - [ADMINISTRADOR](#administrador)
+  - [Inicio de sesión](#inicio-de-sesión)
   - [Secciones de la aplicación](#secciones-de-la-aplicación)
   - [Formulario de grupo](#formulario-de-grupo)
-  - [Análisis de informe](#análisis-de-informe)
+  - [Guardado y edición de resultados](#guardado-y-edición-de-resultados)
+  - [Análisis de informes](#análisis-de-informes)
   - [Cambio de contraseña](#cambio-de-contraseña)
 - [USUARIO](#usuario)
 
 ## ADMINISTRADOR
 
-### Secciones de la aplicación
+### Inicio de sesión
 
-Al acceder a la aplicación, lo primero que aparece es la pantalla de inicio de sesión. En ella, se puede introducir las siguientes credenciales de administrador:
+Al acceder a la aplicación, se muestra la pantalla de inicio de sesión. En ella, el administrador debe introducir sus credenciales para acceder a las funciones de gestión.
 
 **Usuario**
 
@@ -29,120 +31,98 @@ angalo
 123
 ```
 
-Tras iniciar sesión, se mostrará la pantalla principal, que es un menú de selección donde podremos elegir la asignatura y el grupo del que queramos registrar sus resultados:
+Una vez iniciada la sesión, se mostrará la pantalla principal de la aplicación.
+
+### Secciones de la aplicación
+
+La pantalla principal presenta un menú de selección en el que se pueden consultar las asignaturas, los cursos y los grupos disponibles del docente con el que se ha iniciado sesión.
+
+Desde aquí, el administrador puede seleccionar el grupo del que desea registrar o consultar los resultados.
 
 ![Menú principal](/mediaReadme/seleccionAsignaturas.png)
 
-#### Formulario de grupo
+Cada grupo aparece organizado según su asignatura y curso. Al seleccionar uno de ellos, se accede al formulario correspondiente para registrar los resultados.
 
-Al hacer click en alguno de los grupos mostrados y clasificados por asignatura y curso, verás un formulario de los resultados de ese grupo seleccionado.
+### Formulario de grupo
 
-Un ejemplo sería el de ESO2-B de **Lengua Castellana - ESO 2**:
+Al hacer clic en uno de los grupos mostrados, se abrirá el formulario de resultados de dicho grupo.
+
+Por ejemplo, al seleccionar el grupo **ESO2-B** de la asignatura **Lengua Castellana – ESO 2**, se mostrará el siguiente formulario:
 
 ![Formulario vacío](/mediaReadme/formularioVacio.png)
 
-En este formulario, encontrarás las siguientes secciones:
+El formulario está dividido en las siguientes secciones:
 
-- Temas didácticos de la programación
-- Resultados obtenidos
-- Dificultades que ha encontrado
-- Propuestas de mejora
+- **Temas didácticos de la programación**
+- **Resultados obtenidos**
+- **Dificultades encontradas**
+- **Propuestas de mejora**
 
-En la esquina superior izquierda hay un botón por si se quiere cancelar la resolución del formulario. En caso de que no sea así, una vez se rellenan todos los campos, puedes darle al botón de guardar, que añadirá los resultados del formulario a la base de datos y te devolverá a la página anterior.
+Los campos **número de alumnos del grupo** y **alumnos aprobados** son obligatorios. El resto de campos son opcionales, aunque se recomienda completarlos para obtener un informe más completo.
 
-Cabe aclarar que el número de alumnos del grupo y los alumnos aprobados son campos obligatorios, el resto son opcionales.
+En la esquina superior izquierda se encuentra el botón para cancelar la resolución del formulario y volver a la pantalla anterior sin guardar los cambios.
+
+### Guardado y edición de resultados
+
+Una vez completados los campos necesarios, se debe pulsar el botón **Guardar**. De esta forma, los resultados del formulario se añaden a la base de datos y la aplicación vuelve automáticamente a la pantalla anterior.
 
 ![Menú principal, análisis guardado](/mediaReadme/seleccionAsignaturasAnalisisGuardado.png)
 
-Ahora el círculo a la izquierda del grupo cuyos resultados han sido guardados aparecerá de color verde para indicar su resolución.
+Cuando los resultados de un grupo han sido guardados, el círculo situado a la izquierda del grupo aparece en color verde. Esto indica que el formulario correspondiente ya ha sido completado.
 
-Si se quieren revisar los datos guardados, tan solo hay que entrar de nuevo en el formulario del grupo, mostrando todo lo que se haya marcado o escrito.
+Para revisar la información guardada, basta con volver a acceder al formulario del grupo. La aplicación mostrará todos los datos que fueron registrados anteriormente.
 
 ![Formulario escrito](/mediaReadme/formularioRelleno.png)
 
-Para cambiar algo, tan solo hay que seleccionar y modificar el campo que se quiera actualizar y luego guardarlo de nuevo.
+Si se desea modificar algún dato, solo hay que seleccionar el campo correspondiente, actualizar su contenido y volver a pulsar **Guardar**.
 
-#### Análisis de informe
+### Análisis de informes
 
-Para ver un análisis general de los alumnos aprobados tan solo hay que darle click al botón **Análisis de informes** de la esquina superior derecha. Así accederemos a una sección donde se mostrarán las gráficas de alumnos aprobados contra alumnos suspensos por gana grupo, según la asignatura de cada curso.
+Para consultar un análisis general de los alumnos aprobados, hay que pulsar el botón **Análisis de informes**, situado en la esquina superior derecha de la pantalla principal.
+
+En esta sección se muestran gráficas con el número de alumnos aprobados y suspensos por grupo, organizadas según la asignatura y el curso correspondiente.
 
 ![Análisis de informes con solo 3 grupos registrados](/mediaReadme/analisisDeInformes.png)
 
-En este caso, como solo se han guardado los 3 formularios que se veían en la anterior sección, solo se muestran sus datos en esta gráfica.
+En este ejemplo, solo se han registrado los resultados de tres grupos, por lo que únicamente aparecen sus datos en las gráficas.
 
-En el caso de de tener más resultados, se irían añadiendo a esta pantalla. O bien añadiendo un par de barras más a una gráfica si es de la misma asginatura o creando una nueva si es de una diferente.
+A medida que se registren más formularios, los nuevos resultados se irán añadiendo automáticamente al análisis:
 
-Así se vería el menú de selección:
+- Si el grupo pertenece a una asignatura ya representada, se añadirán nuevas barras a la gráfica correspondiente.
+- Si el grupo pertenece a una asignatura nueva, se creará una gráfica adicional.
+
+Así se vería el menú de selección cuando todos los grupos han sido completados:
 
 ![Menú principal, todo resuelto](/mediaReadme/seleccionAsignaturasCompleto.png)
 
-Y así la pantalla de los análisis:
+Y esta sería la vista completa de los análisis:
 
-![Analisis de informes completo](/mediaReadme/analisisDeInformesCompleto.png)
+![Análisis de informes completo](/mediaReadme/analisisDeInformesCompleto.png)
 
-Para poder navegar fácilmente de una asignatura a otra se puede navegar mediante el menú lateral, además de también poder regresar a la sección anterior.
+Para facilitar la navegación entre asignaturas, se puede utilizar el menú lateral. También es posible regresar a la sección anterior en cualquier momento.
 
-#### Cambio de contraseña
+### Cambio de contraseña
 
 ![Formulario para cambiar contraseña](/mediaReadme/formularioCambiarPassword.png)
 
-En esta pantalla se puede cambiar la contraseña del usuario que ha iniciado sesión.
-Esta opción no está habilitada en la demostración.
+En esta pantalla se puede modificar la contraseña del usuario que ha iniciado sesión.
+
+Esta opción no está habilitada en la versión de demostración.
 
 ## USUARIO
 
-Realmente en esta versión de la aplicación no hay una diferencia notable entre las acciones del administrador y el usuario, pero aquí hay un usuario de muestra por si se quiere ver otro perfil:
+En la versión actual de la aplicación, las funciones disponibles para el usuario y el administrador son prácticamente las mismas.
+
+No obstante, se incluye un usuario de muestra por si se desea acceder con un perfil distinto:
 
 **Usuario**
+
 ```text
 lumasa
 ```
 
 **Contraseña**
+
 ```text
 123
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EJECUTAR TODOS ESTOS COMANDOS DENTRO DE LA CARPETA RAÍZ DEL PROYECTO: p27_docente
-
-export MYSQLPASSWORD=hola
-
-docker rm -f gestor-formularios
-
-docker run -d \
---name gestor-formularios \
--e MYSQL_ROOT_PASSWORD=${MYSQLPASSWORD} \
--e MYSQL_DATABASE=formularios \
--p 3307:3306 \
--v ./mysql-data:/var/lib/mysql \
-mysql:8.0
-
-mvn spring-boot:run
-
-docker logs -f gestor-formularios
-
-docker exec -it gestor-formularios mysql -u root -p
-
-# RUTAS
-```curl localhost:8083/api/asignaturas```
-```curl localhost:8083/api/asignaturas/{id}```
-```curl -X POST localhost:8083/api/asignaturas -H "Content-Type: application/json" -d '{"nombre":"Asignatura 1","abreviatura":"as1","nivel":"1","grupo":"1"}'```
-
-```curl localhost:8083/api/grupos```
-```curl localhost:8083/api/grupos/{id}```
-```curl -X POST localhost:8083/api/grupos -H "Content-Type: application/json" -d '{"nombre":"Grupo 1"}'```

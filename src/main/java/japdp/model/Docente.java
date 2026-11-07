@@ -8,7 +8,7 @@ import java.util.List;
  * Se corresponde con una tabla en la base de datos.
  */
 @Entity
-@Table(name = "docente")
+@Table(name = "analisis-docente")
 public class Docente {
 
     /**
