@@ -13,6 +13,8 @@ Esta aplicación permite a los docentes registrar los resultados académicos de 
   - [Cambio de contraseña](#cambio-de-contraseña)
 - [USUARIO](#usuario)
 
+Para poder acceder a la aplicación, haz click en el siguiente enlace: [Proyecto Análisis y resultado de calificaciones](https://japdp.es/analisisResultado)
+
 ## ADMINISTRADOR
 
 ### Inicio de sesión
